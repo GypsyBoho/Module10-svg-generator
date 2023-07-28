@@ -1,10 +1,7 @@
 // import fs, inquirer
 const inquirer = require('inquirer');
 const fs = require('fs');
-const Circle = require('./lib/circle.js')
-const Triangle = require('./lib/triangle.js')
-const Square = require('./lib/square.js')
-// const { shapes } = require('circle', 'triangle', 'square');
+const { Circle, Triangle, Square } = require('./lib/shapes.js');
 
 async function createLogo() {
     const shapeChoices = ['Circle', 'Triangle', 'Square'];
