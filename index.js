@@ -4,13 +4,14 @@ const fs = require('fs');
 const Circle = require('./lib/circle.js')
 const Triangle = require('./lib/triangle.js')
 const Square = require('./lib/square.js')
-const { shapes } = require('circle', 'triangle', 'square');
+// const { shapes } = require('circle', 'triangle', 'square');
 
 async function createLogo() {
     const shapeChoices = ['Circle', 'Triangle', 'Square'];
     // is this the right place to put the choices?
 
-    const userInput = await inquirer.prompt([])
+    let selectedShape;
+    
     // prompt questions inquirer
     this.questions = [];
     inquirer
@@ -20,7 +21,7 @@ async function createLogo() {
                 name: 'letters',
                 message: 'Enter up to 3 letters to appear centered in the svg shape.',
                 validate: function (input) {
-                    return input.length <= 3 === true ; 'Please enter exactly 3 characters.';
+                    return input.length <= 3 === true; 'Please enter exactly 3 characters.';
                 }
             },
             {
@@ -39,7 +40,32 @@ async function createLogo() {
                 name: 'shapeColor',
                 message: 'What color do you want the shape to be (use a keyword(black, white, red blue) or #hexadecimal)?'
             }
-        ]);
+        ])
+        .then((answers) => {
+            const { text, textColor, shapes, shapeColor } = answers;
+            let logoSVG = '';
+            switch (shapes) {
+                case 'circle':
+                    selectedShape = new Circle();
+                    selectedShape.setColor(shapeColor);
+                    logoSVG = selectedShape.render();
+                    break;
+                case 'triangle':
+                    selectedShape = new Triangle();
+                    selectedShape.setColor(shapeColor);
+                    logoSVG = selectedShape.render();
+                    break;
+                case 'square':
+                    selectedShape = new Square();
+                    selectedShape.setColor(shapeColor);
+                    logoSVG = selectedShape.render();
+                    break;
+                default:
+                    console.log('Invalid shape selection')
+                    return;
+            }
+            })
+        
 
     // cannot progress until this^ is complete
 
@@ -48,40 +74,15 @@ async function createLogo() {
     const text = userInput.text;
     const textColor = userInput.textColor;
     const shapeColor = userInput.shapeColor;
-
-
     
-.then((answers)) => {
-        const { text, textColor, shape, shapeColor } = answers;
-        let logoSVG = '';
-        switch (shape) {
-            case 'circle':
-                selectedShape = new Circle();
-                Circle.setColor(shapeColor);
-                logoSVG = circle.render();
-                break;
-            case 'triangle':
-                selectedShape = new Triangle();
-                Triangle.setColor(shapeColor);
-                logoSVG = Triangle.render();
-                break;
-            case 'square':
-                selectedShape = new Square();
-                Square.setColor(shapeColor);
-                logoSVG = Square.render();
-                break;
-                return;
-        }
-
-        selectedShape.setText(text);
-        selectedShape.setTextColor(textColor);
-        selectedShape.setShapeColor(shapeColor);
-
-        const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
-${selectedShape.render()}
-<text x="50%" y="50%" text-anchor="middle" fill="${selectedShape.textColor}" font-size="40">${selectedShape.text}</text></svg>`;
-    }
+    selectedShape.setText(text);
+    selectedShape.setTextColor(textColor);
+    selectedShape.setShapeColor(shapeColor);
+    
+    // const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">${selectedShape.render()}<text x="50%" y="50%" text-anchor="middle" fill="${selectedShape.textColor}" font-size="40">${selectedShape.text}</text></svg>`;
 }
+    
+
 // generate content of file
 
 // write file
@@ -91,6 +92,7 @@ fs.writeFile('logo.svg', svgContent, (err) => {
 })
 
 function createText(fillColor, text) {
+    const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">${selectedShape.render()}<text x="50%" y="50%" text-anchor="middle" fill="${selectedShape.textColor}" font-size="40">${selectedShape.text}</text></svg>`;
     // return string with HTML tag fillColor and text
 }
 
