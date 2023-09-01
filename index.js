@@ -1,19 +1,16 @@
 // import fs, inquirer
 const inquirer = require('inquirer');
-const fs = require('fs');
+const {writeFile} = require('fs/promises');
 const { Circle, Triangle, Square } = require('./lib/shapes.js');
 const SVG = require("./lib/SVG.js")
 
 async function createLogo() {
-    const shapeChoices = ['Circle', 'Triangle', 'Square'];
-
-    let selectedShape;
 
     inquirer
         .prompt([
             {
                 type: 'input',
-                name: 'letters',
+                name: 'text',
                 message: 'Enter up to 3 letters to appear centered in the svg shape.',
                 validate: function (input) {
                     return input.length <= 3 || 'Please enter exactly 3 characters.';
@@ -56,11 +53,11 @@ async function createLogo() {
             selectedShape.setColor(shapeColor);
 
             const mySVG = new SVG()
+            // console.log
             mySVG.setText(text, textColor);
-            mySVG.setShape(selectedShape);
-            const svgContent = mySVG.render();
+            mySVG.setShape(selectedShape.render());
             // return
-            fs.writeFile("./examples/logo.svg", svgContent, (err) => {
+            return writeFile("./examples/logo.svg", mySVG.render(), (err) => {
                 if (err) throw err;
                 console.log('Generated logo.svg');
             });
