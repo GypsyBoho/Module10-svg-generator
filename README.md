@@ -5,7 +5,7 @@
 This app generates an .svg file with a customized logos. Pick a shape, its color, enter up to three letters and chose what color the letters will be. This app was created to simplify the process of creating logos for websites.
 
 This is an example .svg logo
-![image](./assets/imgsvglogo)
+![image](./assets/imgsvglogo.png)
 
 ## Table of Contents
 
