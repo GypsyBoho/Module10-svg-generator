@@ -5,13 +5,12 @@
 This app generates an .svg file with a customized logos. Pick a shape, its color, enter up to three letters and chose what color the letters will be. This app was created to simplify the process of creating logos for websites.
 
 This is an example .svg logo
-![image](add an example of an svg logo here)
+![image]("./assets/imgsvglogo)
 
 ## Table of Contents
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Contributing](#contributing)
 * [License](#license)
 
 ## Installation
@@ -43,15 +42,13 @@ This will prompt the user to answer some questions and generate the README.md fi
 ## License
 
 For more info check [MIT License](https://opensource.org/licenses/MIT)
-    
-
-## Contributing
-
-N/A
 
 ## Tests
 
-N/A
+You can test that the app does generate a logo, with a shape; either a triangle, circle or square, and that three letters appear inside the logo. To initiate the test use the command
+```
+npm run test
+```
 
 
 ## Questions
